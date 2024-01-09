@@ -1,3 +1,4 @@
+
 export { ProductCard } from './components/ProductCard';
 export { ProductList } from './components/ProductList';
 
@@ -13,3 +14,5 @@ export type { Product } from './interfaces/Products';
 export { productApi } from './api/productsApi';
 export * as productActions from './services/actions';
 export { useProducts } from './hooks/useProducts';
+export { useProduct } from './hooks/useProduct';
+export { ProductById } from './pages/ProductById';
