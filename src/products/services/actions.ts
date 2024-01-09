@@ -11,3 +11,4 @@ export const getProducts = async ({
 
   return data;
 };
+
