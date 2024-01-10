@@ -1,14 +1,16 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { productActions } from '..';
 
 export const useProductMutations = () => {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: productActions.createProduct,
-    onSuccess: () => {
+    onSuccess: (data) => {
       console.log('product created');
-    },
-    onSettled: () => {
-      console.log('on settle');
+      queryClient.invalidateQueries({
+        queryKey: ['products', { filterKey: data.category }],
+      });
     },
   });
 
