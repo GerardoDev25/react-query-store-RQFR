@@ -1,7 +1,6 @@
 import { Button, Image, Input, Textarea } from '@nextui-org/react';
-import { useMutation } from '@tanstack/react-query';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { productActions } from '..';
+import { useProductMutations } from '..';
 
 interface FormInputs {
   title: string;
@@ -12,19 +11,14 @@ interface FormInputs {
 }
 
 export const NewProduct = () => {
-  const productMutation = useMutation({
-    mutationFn: productActions.createProduct,
-    onSuccess: () => {
-      console.log('product created');
-    }
-  });
-
+  const productMutation = useProductMutations();
+  
   const { control, handleSubmit, watch } = useForm<FormInputs>({
     defaultValues: {
       category: "women's clothing",
       title: 'new goods',
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias natus voluptate praesentium quo quae, amet ratione sit eius a rem, optio consequuntur consequatur, facere incidunt maxime voluptatem accusantium asperiores est.',
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias natus voluptate praesentium quo quae, amet ratione sit eius a rem, optio consequuntur consequatur, facere incidunt maxime voluptatem accusantium asp eriores est.',
       image:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm84pgj4O4s7kEQMIiRvKQ0S4SX78KP06d7s2jmjneBQ&s',
       price: 0,

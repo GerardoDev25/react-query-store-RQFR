@@ -1,3 +1,4 @@
+
 export { ProductCard } from './components/ProductCard';
 export { ProductList } from './components/ProductList';
 
@@ -16,3 +17,4 @@ export { useProducts } from './hooks/useProducts';
 export { useProduct } from './hooks/useProduct';
 export { ProductById } from './pages/ProductById';
 export { usePrefetchProduct } from './hooks/usePrefetchProduc';
+export { useProductMutations } from './hooks/useProductMutations';
