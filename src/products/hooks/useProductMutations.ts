@@ -44,6 +44,20 @@ export const useProductMutations = () => {
         }
       );
     },
+    onError(error, variables, context) {
+      console.log(error);
+      queryClient.setQueryData(
+        ['products', { filterKey: variables.category }],
+        (old: Product[]) => {
+          if (!old) {
+            return [];
+          }
+          return old.filter(
+            (prod) => prod.id !== context?.optimisticProduct.id
+          );
+        }
+      );
+    },
   });
 
   return mutation;
