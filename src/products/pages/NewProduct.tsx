@@ -10,7 +10,19 @@ interface FormInputs {
 }
 
 export const NewProduct = () => {
-  const { control, handleSubmit } = useForm<FormInputs>({});
+  const { control, handleSubmit, watch } = useForm<FormInputs>({
+    defaultValues: {
+      category: "women's clothing",
+      title: 'new goods',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias natus voluptate praesentium quo quae, amet ratione sit eius a rem, optio consequuntur consequatur, facere incidunt maxime voluptatem accusantium asperiores est.',
+      image:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm84pgj4O4s7kEQMIiRvKQ0S4SX78KP06d7s2jmjneBQ&s',
+      price: 0,
+    },
+  });
+
+  const newImage = watch('image');
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     console.log(data);
@@ -47,7 +59,7 @@ export const NewProduct = () => {
                   type='number'
                   label='Precio del producto'
                   value={field.value?.toString()}
-                  onChange={field.onChange}
+                  onChange={(ev) => field.onChange(+ev.target.value)}
                 />
               )}
             />
@@ -112,7 +124,7 @@ export const NewProduct = () => {
               height: '600px',
             }}
           >
-            <Image src='https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg' />
+            <Image src={newImage} />
           </div>
         </div>
       </form>
