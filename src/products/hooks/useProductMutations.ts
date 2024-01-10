@@ -11,7 +11,7 @@ export const useProductMutations = () => {
       // optimistic product
       const optimisticProduct = { id: Math.random(), ...product };
       // store the product in the cache
-      queryClient.setQueriesData(
+      queryClient.setQueryData(
         ['products', { filterKey: product.category }],
         (old: Product[]) => {
           if (!old) {
@@ -19,20 +19,30 @@ export const useProductMutations = () => {
           } else return [...old, optimisticProduct];
         }
       );
+      return { optimisticProduct };
     },
-    onSuccess: (product) => {
-      queryClient.invalidateQueries({
-        queryKey: ['products', { filterKey: product.category }],
+    onSuccess: (product, variables, context) => {
+      console.log(product, variables, context);
+
+      // queryClient.invalidateQueries({
+      //   queryKey: ['products', { filterKey: product.category }],
+      // });
+
+      queryClient.removeQueries({
+        queryKey: ['product', context?.optimisticProduct.id],
       });
 
-      // queryClient.setQueriesData<Product[]>(
-      //   ['products', { filterKey: product.category }],
-      //   (old) => {
-      //     if (!old) {
-      //       return [old];
-      //     } else return [...old, product];
-      //   }
-      // );
+      queryClient.setQueryData<Product[]>(
+        ['products', { filterKey: product.category }],
+        (old) => {
+          if (!old) {
+            return [product];
+          }
+          return old.map((prod) =>
+            prod.id === context?.optimisticProduct.id ? product : prod
+          );
+        }
+      );
     },
   });
 
